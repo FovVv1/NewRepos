@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{57430E64-6ABA-4DBB-8644-ACE910736581}</ProjectGuid>
+    <ProjectGuid>{567F1900-E300-4CE4-95DE-0BD39AA1561D}</ProjectGuid>
     <OutputType>library</OutputType>
     <RootNamespace>ServerLoadMonitoring</RootNamespace>
     <AssemblyName>ServerLoadMonitoring</AssemblyName>
@@ -100,12 +100,25 @@
   <ItemGroup>
     <Compile Include="Helpers\DayButtonStyleSelector.cs" />
     <Compile Include="Helpers\DayButtonTemplateSelector.cs" />
-    <Compile Include="Helpers\TaskCodes.cs" />
-    <Compile Include="TaskManagerData\TaskManager.xaml.cs">
-      <DependentUpon>TaskManager.xaml</DependentUpon>
+    <Compile Include="Helpers\IMonitoringElUserControl.cs" />
+    <Compile Include="Helpers\JobsHeatmapControl.xaml.cs">
+      <DependentUpon>JobsHeatmapControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TaskManagerData\TaskManagerDataViewModel.cs" />
-    <Compile Include="TaskManagerData\TaskManagerDataVM.cs" />
+    <Compile Include="Helpers\TaskCodes.cs" />
+    <Compile Include="ServerLoadMonitoringAdditional\ServerLoadMonitoringAdditional.xaml.cs">
+      <DependentUpon>ServerLoadMonitoringAdditional.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ServerLoadMonitoringAdditional\ServerLoadMonitoringAdditionalViewModel.cs" />
+    <Compile Include="ServerLoadMonitoringAdditional\ServerLoadMonitoringAdditionalVM.cs" />
+    <Compile Include="ServerLoadMonitoring\ServerLoadMonitoring.xaml.cs">
+      <DependentUpon>ServerLoadMonitoring.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ServerLoadMonitoring\ServerLoadMonitoringViewModel.cs" />
+    <Compile Include="ServerLoadMonitoring\ServerLoadMonitoringVM.cs" />
+    <Page Include="Helpers\JobsHeatmapControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -115,7 +128,11 @@
       <DependentUpon>MainControl.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="TaskManagerData\TaskManager.xaml">
+    <Page Include="ServerLoadMonitoringAdditional\ServerLoadMonitoringAdditional.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ServerLoadMonitoring\ServerLoadMonitoring.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -144,6 +161,12 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ServerLoadMonitoringDataModels\ServerLoadMonitoringDataModels.csproj">
+      <Project>{0991f708-9a59-477c-8787-8ab75a947fdd}</Project>
+      <Name>ServerLoadMonitoringDataModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

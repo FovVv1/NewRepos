@@ -14,17 +14,20 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ElControls.ELHotKey;
 using ElControls.Interface;
+using NLog;
+using ServerLoadMonitoring.Helpers;
 using WarehouseСontexts.ContextSelector;
 
-namespace ServerLoadMonitoring.ServerLoadMonitoringData {
+namespace ServerLoadMonitoring {
 	/// <summary>
-	/// Interaction logic for ServerLoadMonitoringData.xaml
+	/// Interaction logic for ServerLoadMonitoringAdditional.xaml
 	/// </summary>
-	public partial class ServerLoadMonitoringData:IElUserControl,IDisposable,IElHotKey {
+	public partial class ServerLoadMonitoringAdditional:IMonitoringElUserControl,IDisposable,IElHotKey {
+
 
 		public ContextSelector contextSelector { get; set; }
 
-		public ServerLoadMonitoringData() {
+		public ServerLoadMonitoringAdditional() {
 			InitializeComponent();
 
 			Base.Visibility = Visibility.Hidden;
@@ -86,6 +89,23 @@ namespace ServerLoadMonitoring.ServerLoadMonitoringData {
 					tmp.VisibilityRightPanel = Visibility.Collapsed;
 			}
 
+		}
+
+		public int RefreshTime { get; set; }
+		public bool IsAutoRefresh { get; set; }
+		public void RefreshData()
+		{
+			try
+			{
+				if (Base.DataContext is ServerLoadMonitoringDataViewModel model) {
+					model.CommandRefreshData.Execute(null);
+
+				}
+			}
+			catch (Exception e)
+			{
+				LogManager.GetCurrentClassLogger().Error(e.ToString().Replace("\r\n", ""));
+			}
 		}
 	}
 }

@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using ElMessage;
 using Newtonsoft.Json;
+using ServerLoadMonitoring.Helpers;
 using Telerik.Windows.Controls;
 
 namespace ServerLoadMonitoring {
@@ -30,6 +31,16 @@ namespace ServerLoadMonitoring {
 				_includedContentList = value;
 				OnPropertyChanged("IncludedContentList");
 			}
+		} 
+		
+		/// <summary>Коллекция контролов содержимого страниц </summary>
+		private ObservableCollection<IMonitoringElUserControl> _ControlsList;
+		public ObservableCollection<IMonitoringElUserControl> ControlsList {
+			get => _ControlsList;
+            set {
+				_ControlsList = value;
+				OnPropertyChanged("ControlsList");
+			}
 		}
 
 		public void ShowPage() {
@@ -44,8 +55,10 @@ namespace ServerLoadMonitoring {
             //Команда вызова помошника для расширения
 			CommandStartHelper = new DelegateCommand(OnStartHelper);
 
+			ControlsList = new ObservableCollection<IMonitoringElUserControl>() {new ServerLoadMonitoring(), new ServerLoadMonitoringAdditional()};
+
 			//IncludedContentList.Add(new MainControlModel(typeof(Dashboard.Dashboard)) { Image = "&#xe600;", Title = "Дашборд" });
-			IncludedContentList.Add(new MainControlModel(typeof(ServerLoadMonitoringData.ServerLoadMonitoringData)) { Image = "&#xe651;", Title = "Журнал заданий" });
+			//IncludedContentList.Add(new MainControlModel(typeof(ServerLoadMonitoringData.ServerLoadMonitoringAdditional)) { Image = "&#xe651;", Title = "Журнал заданий" });
 			//IncludedContentList.Add(new MainControlModel(typeof(ServerLoadMonitoringSettings.ServerLoadMonitoringSettings)) { Image = "&#xe10f;", Title = "Настройки отчета" });
 		}
 

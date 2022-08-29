@@ -23,9 +23,9 @@ using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Persistence;
 
 namespace ServerLoadMonitoring.ServerLoadMonitoringData {
-	public class ServerLoadMonitoringDataViewModel:ViewModelBase {
+	public class ServerLoadMonitoringAdditionalViewModel:ViewModelBase {
         public RadGridView GridTask { get; set; }
-		public ServerLoadMonitoringDataViewModel()
+		public ServerLoadMonitoringAdditionalViewModel()
         { 
             
          CommandGridToExcel=new DelegateCommand(OnGridToExcel);
@@ -38,6 +38,7 @@ namespace ServerLoadMonitoring.ServerLoadMonitoringData {
          CommandCopyingCellClipboard = new DelegateCommand(OnCopyingCellClipboard);
          CommandCopying=new DelegateCommand(OnCopying);
         CommandClipboardMode = new DelegateCommand(OnClipboardMode);
+        CommandRefreshData = new DelegateCommand(OnRefreshData);
 
          //Управление настройками грида ДЛЯ РАБОТЫ НАСТРОЕК В TAG RADGRIDVIEW ВНОСИМ НОВЫЙ GUID
          CommandSaveConfigGridView=new DelegateCommand(OnSaveConfigGridView);
@@ -274,6 +275,20 @@ namespace ServerLoadMonitoring.ServerLoadMonitoringData {
         /// <summary>Изменить режим копирования</summary>
         public ICommand CommandClipboardMode { get; set; }
         private void OnClipboardMode(object obj)
+        {
+            try
+            {
+                ClipboardMode = !ClipboardMode;
+            }
+            catch (Exception e)
+            {
+                LogManager.GetCurrentClassLogger().Error(e.ToString().Replace("\r\n", ""));
+            }
+        }
+        
+        /// <summary>Изменить режим копирования</summary>
+        public ICommand CommandRefreshData { get; set; }
+        private void OnRefreshData(object obj)
         {
             try
             {

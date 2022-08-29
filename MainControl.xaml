@@ -65,7 +65,7 @@
 
 	<Grid Name="Base">
 
-		<telerik:RadNavigationView x:Name="navigationView" 
+		<!--<telerik:RadNavigationView x:Name="navigationView" 
 		                           ItemsSource="{Binding IncludedContentList}" 
 		                           AutoChangeDisplayMode="False"
 		                           SelectedIndex="{Binding SelectedIndex}" 
@@ -90,7 +90,7 @@
 					</telerik:RadNavigationViewItem.Icon>
 				</telerik:RadNavigationViewItem>
 			</telerik:RadNavigationView.PaneFooter>
-		</telerik:RadNavigationView>
+		</telerik:RadNavigationView>-->
 
 
 
