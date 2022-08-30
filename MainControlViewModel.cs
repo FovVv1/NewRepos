@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using ElMessage;
 using Newtonsoft.Json;
+using NLog;
 using ServerLoadMonitoring.Helpers;
 using Telerik.Windows.Controls;
 
@@ -23,8 +24,57 @@ namespace ServerLoadMonitoring {
 		}       
 		}
 
-        /// <summary>Коллекция контролов содержимого страниц </summary>
-		private ObservableCollection<MainControlModel> _includedContentList;
+      //Режим киоска
+      private bool isKioskMode;
+
+      /// <summary>Kiosk Mode </summary>
+      public bool IsKioskMode {
+         get => isKioskMode;
+         set {
+            try {
+               var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+               var winWight = SystemParameters.MaximizedPrimaryScreenWidth - 14.0 -
+                              2 * SystemParameters.BorderWidth;
+               var winHeight = SystemParameters.MaximizedPrimaryScreenHeight - 14.0 -
+                               2 * SystemParameters.BorderWidth;
+               if (!value) {
+                  window.Topmost = false;
+                  window.Top = 0;
+                  window.Width = winWight;
+                  window.Left = 0;
+                  window.Height = winHeight;
+                  window.WindowState = WindowState.Normal;
+                  window.ResizeMode = ResizeMode.CanResize;
+                  Taskbar.Show();
+                  window.Focus();
+               } else {
+                  Taskbar.Hide();
+
+                  window.Topmost = true;
+
+                  window.WindowState = WindowState.Normal;
+
+
+                  window.WindowStartupLocation = WindowStartupLocation.Manual;
+
+                  window.Top = -42;
+                  window.Width = winWight + 2;
+                  window.Left = -2;
+                  window.Height = winHeight + 100;
+
+                  window.ResizeMode = ResizeMode.NoResize;
+               }
+
+               window.Focus();
+               isKioskMode = value;
+            } catch (Exception e) {
+               LogManager.GetCurrentClassLogger().Error(e.ToString().Replace("\r\n", ""));
+            }
+         }
+      }
+
+      /// <summary>Коллекция контролов содержимого страниц </summary>
+      private ObservableCollection<MainControlModel> _includedContentList;
 		public ObservableCollection<MainControlModel> IncludedContentList {
 			get => _includedContentList;
             set {

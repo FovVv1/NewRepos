@@ -4,33 +4,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ElMessage;
+using ServerLoadMonitoringDataModels.Enums;
 
 namespace ServerLoadMonitoring {
 	public static class ConfigPlugin {
 
 		public static ElConnectionServer connectionElServer;
 		public static string BasePath;
-		private static ulong _SecurityKey;
+		private static EPermissions _SecurityKey;
+		public static Guid InstanceKey { get; set; }
 
-        public static string ELAppData { get; set; }
-		public static ulong SecurityKey {
-            get { return _SecurityKey; }
+		public static EPermissions SecurityKey {
+			get { return _SecurityKey; }
 		}
+
+		public static string ELAppData { get; set; }
+		
 
 		public static MainControlViewModel GlobalModel { get; set; }
 
 		public static string TargetContext { get; set; }
 		public static int ProcessId { get; set; }
 
+		public static bool IsRefreshDataEnabled { get; set; }
+
 		public static void SetSecurityKey(ulong key) {
-			_SecurityKey = key;
+			_SecurityKey = (EPermissions)key;
 			GlobalModel.ShowPage();
 		}
 
-		public static bool GetPermissions(int permission) {
-			return (((ulong)1 << (permission - 1)) & ConfigPlugin.SecurityKey) > 0 ? true : false;
-		}
 
-		public static long SupplyIdForOrder { get; set; }
 	}
 }

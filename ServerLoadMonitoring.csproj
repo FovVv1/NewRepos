@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\EL_Installer\ExtensionPacks\ServisDesck\10101010\</OutputPath>
+    <OutputPath>..\..\EL_Installer\ExtensionPacks\ServerLoadMonitoring\10101010\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -27,7 +27,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\dev\Release\ServisDesck\32143711\</OutputPath>
+    <OutputPath>..\..\ReleasPack\ServerLoadMonitoring\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -104,6 +104,7 @@
     <Compile Include="Helpers\JobsHeatmapControl.xaml.cs">
       <DependentUpon>JobsHeatmapControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Taskbar.cs" />
     <Compile Include="Helpers\TaskCodes.cs" />
     <Compile Include="ServerLoadMonitoringAdditional\ServerLoadMonitoringAdditional.xaml.cs">
       <DependentUpon>ServerLoadMonitoringAdditional.xaml</DependentUpon>

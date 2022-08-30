@@ -41,7 +41,7 @@ namespace ServerLoadMonitoring {
 
             if (Base.DataContext is ServerLoadMonitoringDataViewModel model)
             {
-                model.CommandSaveSettingControlOnClosed.Execute(GridServerLoadMonitoringsData);
+                model.CommandSaveSettingControlOnClosed.Execute(null);
 
             }
         }
@@ -49,14 +49,14 @@ namespace ServerLoadMonitoring {
 			//ConfigPlugin.SetSecurityKey(ContextSelector.SecurityKey);
 			int.TryParse(ConfigPlugin.TargetContext, out var idResult);
 			var tmp = new ServerLoadMonitoringDataViewModel();
-            tmp.CalendarFrom = CalendarFrom;
-            tmp.CalendarTo = CalendarTo;
-            tmp.GridTask = GridServerLoadMonitoringsData;
+            //tmp.CalendarFrom = CalendarFrom;
+            //tmp.CalendarTo = CalendarTo;
+            //tmp.GridTask = GridServerLoadMonitoringsData;
 
 			Base.DataContext = tmp;
 			Base.Visibility = Visibility.Visible;
             //Список контролов на загрузку настроек
-            tmp.CommandLoadSettingControlOnOpen.Execute(GridServerLoadMonitoringsData);
+            tmp.CommandLoadSettingControlOnOpen.Execute(null);
             //******************************************
         }
 
@@ -66,8 +66,8 @@ namespace ServerLoadMonitoring {
             if (e.Key == Key.F5 && Base.DataContext is ServerLoadMonitoringDataViewModel getAllSupply)
                 if (getAllSupply.ActiveTab == 0)
                     getAllSupply.CommandGetTaskList.Execute(null);
-            if (e.Key == Key.F && Base.DataContext is ServerLoadMonitoringDataViewModel search)
-                if (search.ActiveTab == 0) GridServerLoadMonitoringsData.ShowSearchPanel=true;
+            //if (e.Key == Key.F && Base.DataContext is ServerLoadMonitoringDataViewModel search)
+            //    if (search.ActiveTab == 0) GridServerLoadMonitoringsData.ShowSearchPanel=true;
 
         }
 
@@ -80,14 +80,14 @@ namespace ServerLoadMonitoring {
 			double x = mouseEventArgs.GetPosition(sender as TabControl).X;
 
 
-			if (x > 545 && RightPanel.Visibility != Visibility.Visible) {
-				if (Base.DataContext is ServerLoadMonitoringDataViewModel tmp)
-					tmp.VisibilityRightPanel = Visibility.Visible;
-			}
-			if (0 < x && x < 500 && RightPanel.Visibility == Visibility.Visible) {
-				if (Base.DataContext is ServerLoadMonitoringDataViewModel tmp)
-					tmp.VisibilityRightPanel = Visibility.Collapsed;
-			}
+			//if (x > 545 && RightPanel.Visibility != Visibility.Visible) {
+			//	if (Base.DataContext is ServerLoadMonitoringDataViewModel tmp)
+			//		tmp.VisibilityRightPanel = Visibility.Visible;
+			//}
+			//if (0 < x && x < 500 && RightPanel.Visibility == Visibility.Visible) {
+			//	if (Base.DataContext is ServerLoadMonitoringDataViewModel tmp)
+			//		tmp.VisibilityRightPanel = Visibility.Collapsed;
+			//}
 
 		}
 

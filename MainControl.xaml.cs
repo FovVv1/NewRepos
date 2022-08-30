@@ -13,7 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ElControls.ELHotKey;
+using ElDataModels.BasicFunctions;
 using ElMessage;
+using Newtonsoft.Json;
 
 namespace ServerLoadMonitoring
 {
@@ -27,23 +29,66 @@ namespace ServerLoadMonitoring
 			ConfigPlugin.BasePath = setting.PluginFolderPath;
 			ConfigPlugin.TargetContext = null;
 			ConfigPlugin.GlobalModel = new MainControlViewModel();
-			////Если передан целевой параметр на запуск то запускаем с указаного контекста
-			//if (setting.Parameters.ContainsKey("TargetContext")) {
-			//	ConfigPlugin.TargetContext = (string)setting.Parameters["TargetContext"];
-			//	ConfigPlugin.SetSecurityKey((ulong)setting.Parameters["SecurityKey"]);
-			//}
-			//Регестрируем идентификатор процесса
-			ConfigPlugin.ProcessId = (int)setting.Parameters["PluginId"];
+
+
+			
+
+        
+				//Регестрируем идентификатор процесса
+            ConfigPlugin.ProcessId = (int)setting.Parameters["PluginId"];
+
+            if(setting.Parameters.ContainsKey("SecurityKey"))
+            ConfigPlugin.SetSecurityKey((ulong)setting.Parameters["SecurityKey"]);
+
             if (setting.Parameters.ContainsKey("EL_APPDATA"))
-                ConfigPlugin.ELAppData = (string)setting.Parameters["EL_APPDATA"];
-			InitializeComponent();
-			Base.DataContext = ConfigPlugin.GlobalModel;
+	            ConfigPlugin.ELAppData = (string)setting.Parameters["EL_APPDATA"];
+        
+
+         ConfigPlugin.connectionElServer.SendMessage(new ElMessageClient("BasicFunctions", "GetUserSettings", Response_StartViewModel),
+	         JsonConvert.SerializeObject(new { UserId = ConfigPlugin.connectionElServer.CurrentUser.UserID, PluginName = "ServerLoadMonitoring" }));
+
+
+
+        
 
 		}
 
-        #region DISPOSE
 
-        private bool _disposed = false;
+		private void Response_StartViewModel(string data) {
+			Dictionary<string, UserSetting> _param;
+			try {
+				_param = JsonConvert.DeserializeObject<List<UserSetting>>(data).ToDictionary(u => u.KeyName);
+			} catch {
+				_param = new Dictionary<string, UserSetting>();
+			}
+
+
+			
+
+			
+
+			if (_param.ContainsKey("IsRefreshDataEnabled"))
+            //Разрешение на обновление данных
+            ConfigPlugin.IsRefreshDataEnabled = bool.TryParse(_param["IsRefreshDataEnabled"].Value, out var isRefreshDataEnabled);
+
+         
+
+         Application.Current.Dispatcher.Invoke(() =>
+         {
+	         InitializeComponent();
+	         Base.DataContext = ConfigPlugin.GlobalModel;
+
+	         if (_param.ContainsKey("FullScreen"))
+		         ConfigPlugin.GlobalModel.IsKioskMode = true;
+         });
+
+
+      }
+
+
+      #region DISPOSE
+
+      private bool _disposed = false;
 
         // реализация интерфейса IDisposable.
         public void Dispose()
@@ -59,10 +104,11 @@ namespace ServerLoadMonitoring
             if (disposing)
             {
 
-                foreach (var viewModel in navigationView.Items)
+                foreach (var viewModel in ConfigPlugin.GlobalModel.ControlsList)
                 {
-                    if (!(viewModel is MainControlModel tmpss)) continue;
-                    if (tmpss.Content is IDisposable dis) dis.Dispose();
+	                //if (viewModel is MainControlModel tmpss)
+		                if (viewModel is IDisposable dis)
+			                dis.Dispose();
                 }
             }
             // освобождаем неуправляемые объекты
@@ -83,6 +129,16 @@ namespace ServerLoadMonitoring
                 ConfigPlugin.GlobalModel.CommandStartHelper.Execute(null);
                 return;
             }
+
+            
+            //Отключение полноэкранного режима
+            if (e.Key == Key.B)
+            {
+                ConfigPlugin.GlobalModel.IsKioskMode = !ConfigPlugin.GlobalModel.IsKioskMode;
+                return;
+            }
+
+
 
 
             if (ConfigPlugin.GlobalModel.IncludedContentList[ConfigPlugin.GlobalModel.SelectedIndex].Content is IElHotKey vm) vm.OnElHotKey(e);

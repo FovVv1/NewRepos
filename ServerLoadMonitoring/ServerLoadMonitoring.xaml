@@ -341,18 +341,22 @@
 			</DataTemplate>
 		</telerik:RadBusyIndicator.BusyContentTemplate>
 		<Grid>
-			<Grid.RowDefinitions>
+			<!--<Grid.RowDefinitions>
 				<RowDefinition Height="65"/>
 				<RowDefinition Height="*"/>
-			</Grid.RowDefinitions>
+			</Grid.RowDefinitions>-->
 
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="550"/>
 			</Grid.ColumnDefinitions>
 
-			<!--Лента -->
-			<Grid HorizontalAlignment="Stretch">
+
+			<TextBlock Grid.Column="1" Text="1" FontSize="40" Foreground="LightSeaGreen">
+				</TextBlock>
+
+					<!--Лента -->
+			<!--<Grid HorizontalAlignment="Stretch">
 				<TabControl Name="TabControl"  BorderThickness="0" Background="#3c3c3e" Margin="10 -1 0 0" HorizontalAlignment="Stretch" SelectedIndex="{Binding ActiveTab}"
                               
                                 >
@@ -418,15 +422,7 @@
                                     <telerik:RadButton Style="{StaticResource ButtonRibbonStyle}" IsEnabled="{Binding IsEnableExportToExcel}" Command="{Binding CommandGridToExcel}" ToolTipService.ToolTip="Экспортировать в Excel" >
                                         <Image Style="{StaticResource ImageButtonRibbonStyle}"   Source="pack://application:,,,/ELImages;component/button_image/export_excel.png" Stretch="Fill"  />
                                     </telerik:RadButton>
-                                    <!--<telerik:RadButton Command="{Binding CommandClosePlugin}"   ToolTipService.ToolTip="Перезапустить сервер" Style="{StaticResource ButtonRibbonStyle}">
-										<Image   Source="pack://application:,,,/ELImages;component/button_image/restart_server.png" Style="{StaticResource ImageButtonRibbonStyle}" />
-									</telerik:RadButton>-->
-									<!--<telerik:RadButton Command="{Binding CommandLoadPlugin}"   ToolTipService.ToolTip="Загрузить плагин" Style="{StaticResource ButtonRibbonStyle}">
-										<Image   Source="pack://application:,,,/ELImages;component/button_image/activate_plugin.png" Style="{StaticResource ImageButtonRibbonStyle}" />
-									</telerik:RadButton>-->
-									<!--<telerik:RadButton Command="{Binding CommandLoadPlugin}"   ToolTipService.ToolTip="Активировать плагин" Style="{StaticResource ButtonRibbonStyle}">
-										<Image   Source="pack://application:,,,/ELImages;component/button_image/login.png" Style="{StaticResource ImageButtonRibbonStyle}" />
-									</telerik:RadButton>-->
+                                 
 								</telerik:RadToolBar>
 
 								<telerik:RadToolBar Margin="3 -2 0 -1" Height="48" HorizontalAlignment="Stretch" BorderThickness="0"  GripVisibility="Collapsed" AutoHideOverflowButton="True" VerticalAlignment="Center">
@@ -466,12 +462,12 @@
 					</TabItem>
 
 				</TabControl>
-			</Grid>
+			</Grid>-->
 			<!--Лента завершение-->
 
-			<TabControl Padding="-1" Margin="0 -2 0 0" SelectedIndex="{Binding ActiveTab}" Grid.Column="0"
+			<!--<TabControl Padding="-1" Margin="0 -2 0 0" SelectedIndex="{Binding ActiveTab}" Grid.Column="0"
 							            Grid.Row="1" Grid.ColumnSpan="2">
-				<!--Грид для отображения журнала -->
+				
 				<TabItem Header="Main" Visibility="Collapsed">
 					<Grid Background="#202020"  >
 
@@ -485,7 +481,6 @@
 							<RowDefinition Height="*"/>
 						</Grid.RowDefinitions>
 
-						<!-- Title panel-->
 						<Grid  Background="DarkSlateGray" Height="36" Grid.Row="0" Margin="0,0,0,0" Grid.RowSpan="2" Visibility="Visible" VerticalAlignment="Top">
 							<TextBlock HorizontalAlignment="Left" TextAlignment="Left" Style="{StaticResource TitleStyle}" Text="Журнал заданий" FontSize="12" Foreground="Gray" 
 											           Margin="20 0 0 0"/>
@@ -497,10 +492,7 @@
 							</StackPanel>
 
 						</Grid>
-						<!-- End Title panel-->
-
-
-						<!--/Область данных-->
+					
 
 						<Grid Grid.Column="0"
 						      Grid.Row="1">
@@ -524,67 +516,65 @@
 					                     GroupPanelBackground="#202020"
                                 Tag="{StaticResource GridServerLoadMonitoringsData}"
                             >
-                                <!--Панель управления гридом-->
-                        <telerik:RadGridView.ControlPanelItems>
-                            <telerik:ControlPanelItem ButtonTooltip="Настройка таблицы" >
-                                <telerik:ControlPanelItem.Content>
-                                    <StackPanel>
-                                        <TextBlock Text="Управление настройками" Foreground="#999" FontSize="9" Margin="10 5 0 2"></TextBlock>
-                                        <Grid Height="32" Margin="10 0 0 5">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="32"/>
-                                                <ColumnDefinition Width="32"/>
-                                                <ColumnDefinition Width="32"/>
-                                                <ColumnDefinition Width="32"/>
-                                            </Grid.ColumnDefinitions>
-                                            <telerik:RadButton    Command="{Binding Path=DataContext.CommandLoadConfigGridView, ElementName=Base }"  
+								<telerik:RadGridView.ControlPanelItems>
+									<telerik:ControlPanelItem ButtonTooltip="Настройка таблицы" >
+										<telerik:ControlPanelItem.Content>
+											<StackPanel>
+												<TextBlock Text="Управление настройками" Foreground="#999" FontSize="9" Margin="10 5 0 2"></TextBlock>
+												<Grid Height="32" Margin="10 0 0 5">
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition Width="32"/>
+														<ColumnDefinition Width="32"/>
+														<ColumnDefinition Width="32"/>
+														<ColumnDefinition Width="32"/>
+													</Grid.ColumnDefinitions>
+													<telerik:RadButton    Command="{Binding Path=DataContext.CommandLoadConfigGridView, ElementName=Base }"  
                                                                       CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=telerik:RadGridView, Mode=FindAncestor}}"
                                                                      ToolTipService.ToolTip="Пользовательские настройки" >
-                                                <telerik:RadGlyph Glyph="&#xe132;" FontSize="16" Foreground="#d7ac6a" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                                            </telerik:RadButton>
-                                            <telerik:RadButton Grid.Column="1" 
+														<telerik:RadGlyph Glyph="&#xe132;" FontSize="16" Foreground="#d7ac6a" VerticalAlignment="Center" HorizontalAlignment="Center" />
+													</telerik:RadButton>
+													<telerik:RadButton Grid.Column="1" 
                                                                    Command="{Binding Path=DataContext.CommandSaveConfigGridView, ElementName=Base }" 
                                                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=telerik:RadGridView, Mode=FindAncestor}}"
                                                                    ToolTipService.ToolTip="Сохранить установленные настройки" >
-                                                <telerik:RadGlyph Glyph="&#xe133;" FontSize="16"  Foreground="#8dd28a"  />
-                                            </telerik:RadButton>
-                                            <telerik:RadButton   Grid.Column="2" Command="{Binding  Path=DataContext.CommandResetConfigGridView, ElementName=Base}" 
+														<telerik:RadGlyph Glyph="&#xe133;" FontSize="16"  Foreground="#8dd28a"  />
+													</telerik:RadButton>
+													<telerik:RadButton   Grid.Column="2" Command="{Binding  Path=DataContext.CommandResetConfigGridView, ElementName=Base}" 
                                                                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=telerik:RadGridView, Mode=FindAncestor}}"
                                                                      ToolTipService.ToolTip="Сброс пользовательских настроек" >
-                                                <telerik:RadGlyph Glyph="&#xe102;" FontSize="16" Foreground="#FF0000"  />
-                                            </telerik:RadButton>
+														<telerik:RadGlyph Glyph="&#xe102;" FontSize="16" Foreground="#FF0000"  />
+													</telerik:RadButton>
 
-                                            <telerik:RadButton   Grid.Column="3" Command="{Binding  Path=DataContext.CommandChangeModeSaveConfig, ElementName=Base}" 
+													<telerik:RadButton   Grid.Column="3" Command="{Binding  Path=DataContext.CommandChangeModeSaveConfig, ElementName=Base}" 
                                                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=telerik:RadGridView, Mode=FindAncestor}}"
                                                                            ToolTipService.ToolTip="Сохранять настройки при выходе" >
-                                                <telerik:RadGlyph Glyph="&#xe134;" FontSize="16"  >
-                                                    <telerik:RadGlyph.Style>
-                                                        <Style TargetType="{x:Type telerik:RadGlyph}">
-                                                            <Setter  Property="telerik:RadGlyph.Foreground" Value="#c7c7c7" />
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Path=Tag.IsAutoSaveMode, RelativeSource={RelativeSource AncestorType=telerik:RadGridView, Mode=FindAncestor}}" Value="True" >
-                                                                    <Setter  Property="telerik:RadGlyph.Foreground" Value="#4788c7" />
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </telerik:RadGlyph.Style>
-                                                </telerik:RadGlyph>
-                                            </telerik:RadButton>
+														<telerik:RadGlyph Glyph="&#xe134;" FontSize="16"  >
+															<telerik:RadGlyph.Style>
+																<Style TargetType="{x:Type telerik:RadGlyph}">
+																	<Setter  Property="telerik:RadGlyph.Foreground" Value="#c7c7c7" />
+																	<Style.Triggers>
+																		<DataTrigger Binding="{Binding Path=Tag.IsAutoSaveMode, RelativeSource={RelativeSource AncestorType=telerik:RadGridView, Mode=FindAncestor}}" Value="True" >
+																			<Setter  Property="telerik:RadGlyph.Foreground" Value="#4788c7" />
+																		</DataTrigger>
+																	</Style.Triggers>
+																</Style>
+															</telerik:RadGlyph.Style>
+														</telerik:RadGlyph>
+													</telerik:RadButton>
 
-                                        </Grid>
-                                        <TextBlock Text="Видимость столбцов" Foreground="#999" FontSize="9" Margin="10 -3 0 3"></TextBlock>
-                                        <ListBox ItemsSource="{Binding Columns}" BorderThickness=" 3 0 3 3" >
-                                            <ListBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <CheckBox Content="{Binding Header, Mode=OneWay}" IsChecked="{Binding IsVisible, Mode=TwoWay}" />
-                                                </DataTemplate>
-                                            </ListBox.ItemTemplate>
-                                        </ListBox>
-                                    </StackPanel>
-                                </telerik:ControlPanelItem.Content>
-                            </telerik:ControlPanelItem>
-                        </telerik:RadGridView.ControlPanelItems>
-                        <!--/Панель управления гридом-->
+												</Grid>
+												<TextBlock Text="Видимость столбцов" Foreground="#999" FontSize="9" Margin="10 -3 0 3"></TextBlock>
+												<ListBox ItemsSource="{Binding Columns}" BorderThickness=" 3 0 3 3" >
+													<ListBox.ItemTemplate>
+														<DataTemplate>
+															<CheckBox Content="{Binding Header, Mode=OneWay}" IsChecked="{Binding IsVisible, Mode=TwoWay}" />
+														</DataTemplate>
+													</ListBox.ItemTemplate>
+												</ListBox>
+											</StackPanel>
+										</telerik:ControlPanelItem.Content>
+									</telerik:ControlPanelItem>
+								</telerik:RadGridView.ControlPanelItems>
 
 								<telerik:RadGridView.Columns>
 
@@ -877,16 +867,7 @@
                                     </telerik:GridViewDataColumn>
 
 								</telerik:RadGridView.Columns>
-                             
-                                <!--<telerik:RadContextMenu.ContextMenu >
-									<telerik:RadContextMenu 
-								ItemContainerStyle="{StaticResource MenuItemContainer}" 
-								FontWeight="Normal"
-								Foreground="#FFBBBBBB"
-								Opening="RadContextMenu_OnOpeningOnMain"
-							/>-->
-
-								<!--</telerik:RadContextMenu.ContextMenu>-->
+                            
 
 								<telerik:EventToCommandBehavior.EventBindings>
 									<telerik:EventBinding Command="{Binding Path=DataContext.CommandMouseDoubleClickGrid, ElementName=Base}" EventName="MouseDoubleClick" RaiseOnHandledEvents="True" PassEventArgsToCommand="True"  />
@@ -907,7 +888,7 @@
 										<RowDefinition Height="35"  />
 										<RowDefinition Height="*" />
 									</Grid.RowDefinitions>
-                                    <!--Шапка панели управления с кнопкой убрать-->
+                                   
                                     <StackPanel Grid.Row="0"   Margin="0 0 0 0" >
                                         <StackPanel Orientation="Horizontal" Height="34">
                                             <telerik:RadButton  CornerRadius="0" Height="34" Width="34"  Padding="6" Margin="0 0 0 0" IsBackgroundVisible="False" BorderThickness="0" 
@@ -918,7 +899,7 @@
                                             <TextBlock Text="Настройки" Margin="5 8 8 7" FontSize="16" Foreground="#999999" TextAlignment="Left" />
                                         </StackPanel>
                                     </StackPanel>
-                                    <!--*******************************************-->
+                                 
 
                                     <Grid Grid.Row="1" Background="#323234" >
                                         <Grid.RowDefinitions>
@@ -944,7 +925,7 @@
                                                         <TextBlock Text="Интервал дат" Margin="15 7 8 7"
                                                                    FontSize="16"
                                                                    Foreground="#DDDDDD" />
-                                                        <!--<TextBlock Height="1" Background="#999999" />-->
+                                                      
                                                     </StackPanel>
 
                                                 </Expander.Header>
@@ -975,9 +956,7 @@
                                                         <telerik:RadButton Content="Сегодня" Margin="10 0 10 1"
                                                                            Foreground="#AAAAAA"
                                                                            Command="{Binding  CommandCalendarFromToday}" />
-                                                        <!--DayTemplateSelector="{StaticResource DayButtonTemplateSelector}"
-                                DayButtonStyleSelector="{DynamicResource CustomStyleSelector}"-->
-
+                                                     
                                                     </StackPanel>
 
                                                     <StackPanel Grid.Column="1" Margin="10 8 0 0">
@@ -1000,9 +979,7 @@
                                                         <telerik:RadButton Content="Сегодня" Margin="10 0 10 10"
                                                                            Foreground="#AAAAAA"
                                                                            Command="{Binding  CommandCalendarToToday}" />
-                                                        <!--DayTemplateSelector="{StaticResource DayButtonTemplateSelector}"
-                                DayButtonStyleSelector="{DynamicResource CustomStyleSelector}"-->
-
+                                                      
                                                     </StackPanel>
 
 
@@ -1016,31 +993,9 @@
                                                         <TextBlock Text="Дополнительно" Margin="15 0 8 7"
                                                                    FontSize="16"
                                                                    Foreground="#DDDDDD" />
-                                                        <!--<TextBlock Height="1" Background="#999999" />-->
+                                                     
                                                     </StackPanel>
-                                                    <!--<telerik:RadMaskedTextInput.TextBoxStyle>
-                                                            <Style TargetType="maskedInput:PreviewInputTextBox" >
-                                                                <Setter Property="TextWrapping" Value="Wrap" />
-                                                                <Setter Property="AcceptsReturn" Value="False" />
-                                                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                                                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-
-                                                                <Setter Property="Template">
-                                                                    <Setter.Value>
-                                                                        <ControlTemplate TargetType="maskedInput:PreviewInputTextBox">
-                                                                            <ScrollViewer
-                                                                            Padding="{TemplateBinding Padding}"
-                                                                            Background="Transparent"
-                                                                            BorderThickness="0"
-                                                                            Foreground="{TemplateBinding Foreground}"
-                                                                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                                            x:Name="PART_ContentHost"/>
-                                                                        </ControlTemplate>
-                                                                    </Setter.Value>
-                                                                </Setter>
-                                                            </Style>
-                                                        </telerik:RadMaskedTextInput.TextBoxStyle>-->
+                                                
                                                 </Expander.Header>
                                                 <StackPanel>
                                                     <StackPanel Orientation="Horizontal" Margin="40 20 0 0">
@@ -1093,7 +1048,7 @@
                                         <RowDefinition Height="35"  />
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
-                                    <!--Шапка панели управления с кнопкой убрать-->
+                                 
                                     <StackPanel Grid.Row="0"   Margin="0 0 0 0" >
                                         <StackPanel Orientation="Horizontal" Height="34">
                                             <telerik:RadButton  CornerRadius="0" Height="34" Width="34"  Padding="6" Margin="0 0 0 0" IsBackgroundVisible="False" BorderThickness="0" 
@@ -1104,8 +1059,7 @@
                                             <TextBlock Text="Настройки" Margin="5 8 8 7" FontSize="16" Foreground="#999999" TextAlignment="Left" />
                                         </StackPanel>
                                         <TextBlock Height="1" Background="#999999" />
-                                    </StackPanel>
-                                    <!--*******************************************-->
+                                    </StackPanel> 
 
                                     <Grid Grid.Row="1" Background="#262626" >
                                         <Grid.RowDefinitions>
@@ -1134,9 +1088,6 @@
 
 						</TabControl>
 
-						<!--свернутая панель-->
-
-						<!--Правая панель-->
 						<Grid Name="RightPanel" Grid.Column="1" Grid.Row="0"   Grid.RowSpan="2"  Visibility="{Binding VisibilityRightPanel}" HorizontalAlignment="Right"
                               MaxWidth="50"  >
 							<Grid.Style>
@@ -1159,28 +1110,20 @@
 									</telerik:RadButton>
 
 
-									<!--Кнопка открытия второй вкладки в журнале пока не используем-->
-									<!--<telerik:RadButton  CornerRadius="0" Height="40" Width="42"  Padding="6" Margin="0 0 0 0" IsBackgroundVisible="False" BorderThickness="0" 
-                                                            Focusable="False" Command="{Binding CommandToggleRightPanel}" CommandParameter="1">
-										<Image Margin="5 5 0 0"   Source="pack://application:,,,/ELImages;component/button_image/properties.png"  Stretch="Fill" 
-                                                   ToolTipService.ToolTip="Параметры плагина"/>
-									</telerik:RadButton>-->
-									<!--Кнопка открытия второй вкладки в журнале пока не используем-->
-
 								</StackPanel>
 
 							</StackPanel>
 						</Grid>
-						<!--Right panel end-->
+						
 
 					</Grid>
-					<!--Right panel end-->
+				
 
 
 
 				</TabItem>
 
-			</TabControl>
+			</TabControl>-->
 
 		</Grid>
 		</telerik:RadBusyIndicator>
