@@ -141,13 +141,13 @@ namespace ServerLoadMonitoring
 
 
 
-            if (ConfigPlugin.GlobalModel.IncludedContentList[ConfigPlugin.GlobalModel.SelectedIndex].Content is IElHotKey vm) vm.OnElHotKey(e);
+            if (ConfigPlugin.GlobalModel.ControlsList[ConfigPlugin.GlobalModel.SelectedIndex] is IElHotKey vm) vm.OnElHotKey(e);
 
         }
 
         public void OnElScanData(List<KeyEventArgs> listKey)
         {
-            if (ConfigPlugin.GlobalModel.IncludedContentList[ConfigPlugin.GlobalModel.SelectedIndex].Content is IElHotKey vm) vm.OnElScanData(listKey);
+            if (ConfigPlugin.GlobalModel.ControlsList[ConfigPlugin.GlobalModel.SelectedIndex] is IElHotKey vm) vm.OnElScanData(listKey);
         }
 
 	}

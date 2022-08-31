@@ -17,6 +17,7 @@ using ElMessage;
 using Newtonsoft.Json;
 using NLog;
 using ServerLoadMonitoring.Helpers;
+using ServerLoadMonitoringDataModels.Enums;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Calendar;
 using Telerik.Windows.Controls.GridView;
@@ -25,6 +26,7 @@ using Telerik.Windows.Persistence;
 namespace ServerLoadMonitoring {
 	public class ServerLoadMonitoringDataViewModel:ViewModelBase {
         public RadGridView GridTask { get; set; }
+        public JobsHeatmapControl HeatmapControl { get; set; }
 		public ServerLoadMonitoringDataViewModel()
         { 
             
@@ -39,6 +41,7 @@ namespace ServerLoadMonitoring {
          CommandCopying=new DelegateCommand(OnCopying);
         CommandClipboardMode = new DelegateCommand(OnClipboardMode);
         CommandRefreshData = new DelegateCommand(OnRefreshData);
+        CommandGetMonitoringData = new DelegateCommand(OnGetMonitoringData);
 
          //Управление настройками грида ДЛЯ РАБОТЫ НАСТРОЕК В TAG RADGRIDVIEW ВНОСИМ НОВЫЙ GUID
          CommandSaveConfigGridView=new DelegateCommand(OnSaveConfigGridView);
@@ -292,7 +295,31 @@ namespace ServerLoadMonitoring {
         {
             try
             {
-                ClipboardMode = !ClipboardMode;
+	            if (ConfigPlugin.IsRefreshDataEnabled)
+	            {
+		            ConfigPlugin.connectionElServer.SendMessage(
+			            new ElMessageClient("ServerLoadMonitoring", "RefreshData", Response_RefreshData),
+			            JsonConvert.SerializeObject(new { ReportKey = ESettingsKeys.CurrentJobsStatus }));
+					}
+            }
+            catch (Exception e)
+            {
+                LogManager.GetCurrentClassLogger().Error(e.ToString().Replace("\r\n", ""));
+            }
+        }
+        
+        /// <summary>Изменить режим копирования</summary>
+        public ICommand CommandGetMonitoringData { get; set; }
+        private void OnGetMonitoringData(object obj)
+        {
+            try
+            {
+	            //if (ConfigPlugin.IsRefreshDataEnabled)
+	            //{
+		            ConfigPlugin.connectionElServer.SendMessage(
+			            new ElMessageClient("ServerLoadMonitoring", "GetServerLoadMonitoringData", Response_GetMonitoringData),
+			            JsonConvert.SerializeObject(new { ReportKey = ESettingsKeys.CurrentJobsStatus }));
+					//}
             }
             catch (Exception e)
             {
@@ -823,6 +850,33 @@ namespace ServerLoadMonitoring {
       #endregion
 
       #region ServerResponses
+
+
+      private void Response_RefreshData(string data)
+      {
+	      try {
+
+		      //ListServerLoadMonitoringsData = JsonConvert.DeserializeObject<ObservableCollection<ElTask>>(data);
+
+		      //IsBusy = false;
+	      } catch (Exception e) {
+		      LogManager.GetCurrentClassLogger().Error(e.ToString().Replace("\r\n", ""));
+		      //IsBusy = false;
+	      }
+      }
+      
+      private void Response_GetMonitoringData(string data)
+      {
+	      try {
+
+		      //ListServerLoadMonitoringsData = JsonConvert.DeserializeObject<ObservableCollection<ElTask>>(data);
+
+		      //IsBusy = false;
+	      } catch (Exception e) {
+		      LogManager.GetCurrentClassLogger().Error(e.ToString().Replace("\r\n", ""));
+		      //IsBusy = false;
+	      }
+      }
 
 
       private void Response_GetListTask(string data) {

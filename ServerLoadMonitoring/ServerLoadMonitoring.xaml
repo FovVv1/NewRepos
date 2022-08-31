@@ -348,12 +348,15 @@
 
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="550"/>
+				<ColumnDefinition Width="*"/>
 			</Grid.ColumnDefinitions>
 
 
-			<TextBlock Grid.Column="1" Text="1" FontSize="40" Foreground="LightSeaGreen">
+			<TextBlock Grid.Column="0" Text="1" FontSize="40" Foreground="LightSeaGreen">
 				</TextBlock>
+
+			<helpers:JobsHeatmapControl Grid.Column="1" x:Name="HeatmapControl">
+				</helpers:JobsHeatmapControl>
 
 					<!--Лента -->
 			<!--<Grid HorizontalAlignment="Stretch">

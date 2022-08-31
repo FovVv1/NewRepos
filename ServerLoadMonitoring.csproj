@@ -104,6 +104,8 @@
     <Compile Include="Helpers\JobsHeatmapControl.xaml.cs">
       <DependentUpon>JobsHeatmapControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\JobsHeatmapControlViewModel.cs" />
+    <Compile Include="Helpers\JobViewModel.cs" />
     <Compile Include="Helpers\Taskbar.cs" />
     <Compile Include="Helpers\TaskCodes.cs" />
     <Compile Include="ServerLoadMonitoringAdditional\ServerLoadMonitoringAdditional.xaml.cs">

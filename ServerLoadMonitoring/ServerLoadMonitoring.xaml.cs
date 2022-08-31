@@ -49,6 +49,7 @@ namespace ServerLoadMonitoring {
 			//ConfigPlugin.SetSecurityKey(ContextSelector.SecurityKey);
 			int.TryParse(ConfigPlugin.TargetContext, out var idResult);
 			var tmp = new ServerLoadMonitoringDataViewModel();
+			tmp.HeatmapControl = HeatmapControl;
             //tmp.CalendarFrom = CalendarFrom;
             //tmp.CalendarTo = CalendarTo;
             //tmp.GridTask = GridServerLoadMonitoringsData;
@@ -64,8 +65,9 @@ namespace ServerLoadMonitoring {
         {
 
             if (e.Key == Key.F5 && Base.DataContext is ServerLoadMonitoringDataViewModel getAllSupply)
-                if (getAllSupply.ActiveTab == 0)
-                    getAllSupply.CommandGetTaskList.Execute(null);
+					getAllSupply.CommandRefreshData.Execute(null);
+                //if (getAllSupply.ActiveTab == 0)
+                //    getAllSupply.CommandGetTaskList.Execute(null);
             //if (e.Key == Key.F && Base.DataContext is ServerLoadMonitoringDataViewModel search)
             //    if (search.ActiveTab == 0) GridServerLoadMonitoringsData.ShowSearchPanel=true;
 
