@@ -34,10 +34,13 @@ namespace ServerLoadMonitoring.Helpers {
 		{
 			try
 			{
-				if(Base.DataContext is JobsHeatmapControlViewModel baseModel)
+				Application.Current.Dispatcher.Invoke(() =>
 				{
-					baseModel.Jobs = new ObservableCollection<JobViewModel>(jobs);
-				}
+					if (Base.DataContext is JobsHeatmapControlViewModel baseModel) {
+						baseModel.Jobs = new ObservableCollection<JobViewModel>(jobs);
+					}
+				});
+				
 			}
 			catch (Exception e)
 			{

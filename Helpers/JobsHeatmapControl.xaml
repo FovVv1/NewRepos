@@ -47,8 +47,16 @@
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
-		
+
+		<ListBox Grid.Row="1" ItemsSource="{Binding Messages}" >
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding}"   
+					           Margin="0 0 0 0" Foreground="#FFFFFF" FontSize="30"/>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
 
 
-	</Grid>
+</Grid>
 </UserControl>

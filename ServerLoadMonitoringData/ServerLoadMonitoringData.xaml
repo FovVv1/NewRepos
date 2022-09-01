@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ServerLoadMonitoring.ServerLoadMonitoring"
+﻿<UserControl x:Class="ServerLoadMonitoring.ServerLoadMonitoringData.ServerLoadMonitoringData"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,9 +11,6 @@
              xmlns:helpers="clr-namespace:ServerLoadMonitoring.Helpers"
              xmlns:maskedInput="clr-namespace:Telerik.Windows.Controls.MaskedInput;assembly=Telerik.Windows.Controls.Input"
              xmlns:radGridViewConfig="clr-namespace:ElControls.RadGridViewConfig;assembly=ElControls"
-             xmlns:ElData="clr-namespace:ElDataModels.TaskManager;assembly=ElDataModels"
-             xmlns:enums="clr-namespace:ElDataModels.TaskManager.Enums;assembly=ElDataModels"
-             xmlns:taskManager="clr-namespace:ElDataModels.TaskManager;assembly=ElDataModels"
              mc:Ignorable="d" 
              d:DesignHeight="1080" d:DesignWidth="1920">
 
@@ -356,7 +353,7 @@
 				</TextBlock>
 
 			<helpers:JobsHeatmapControl Grid.Column="1" x:Name="HeatmapControl">
-				</helpers:JobsHeatmapControl>
+			</helpers:JobsHeatmapControl>
 
 					<!--Лента -->
 			<!--<Grid HorizontalAlignment="Stretch">

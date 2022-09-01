@@ -31,11 +31,19 @@ namespace ServerLoadMonitoring.Helpers {
 			{
 				
 				var lastMessages = new ObservableCollection<string>();
-				var jobs = _Jobs?.ToList().Where(i => i.Status != EJobStatus.OK)?.OrderBy(i => i.Priority);
+				var jobs = _Jobs?.ToList().Where(i => i.Status != EJobStatus.OK)?.OrderBy(i => i.Priority).ToList();
 
 				if (jobs != null && jobs.Any())
 				{
-					var lastJobs = jobs.Take(2);
+					if (jobs.Count() >= 2)
+					{
+						lastMessages.Add(jobs[0].Description);
+						lastMessages.Add(jobs[1].Description);
+					}
+					else
+					{
+						lastMessages.Add(jobs[0].Description);
+					}
 					//lastMessages.ad
 				}
 

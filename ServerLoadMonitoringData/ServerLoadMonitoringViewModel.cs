@@ -17,6 +17,7 @@ using ElMessage;
 using Newtonsoft.Json;
 using NLog;
 using ServerLoadMonitoring.Helpers;
+using ServerLoadMonitoringDataModels;
 using ServerLoadMonitoringDataModels.Enums;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Calendar;
@@ -61,8 +62,8 @@ namespace ServerLoadMonitoring {
          _selectedDateTo = DateTime.Today;
          _selectedDateFrom = DateTime.Today.AddDays(-1);
          
-         IsAllSubnetUnloading = false;
-         Mask = 24;
+         //IsAllSubnetUnloading = false;
+         //Mask = 24;
         }
 
         #region Properties
@@ -77,6 +78,10 @@ namespace ServerLoadMonitoring {
                 OnPropertyChanged("ListServerLoadMonitoringsData");
             }
         }
+
+
+        private BackupMonitorData _lastLoadedBackup { get; set; }
+
 
         private ElTask _SelectedServerLoadMonitoringData;
 
@@ -109,92 +114,7 @@ namespace ServerLoadMonitoring {
             }
         }
 
-        private string _taskCodeString;
-
-        public string TaskCodeString
-        {
-            get => _taskCodeString;
-            set
-            {
-                _taskCodeString = value;
-                OnPropertyChanged("TaskCodeString");
-            }
-        }
-
-
-        private int _firstOctet;
-
-        public int FirstOctet
-        {
-            get => _firstOctet;
-            set
-            {
-                _firstOctet = value;
-                OnPropertyChanged("FirstOctet");
-            }
-        }
-
-        private int _secondOctet;
-
-        public int SecondOctet
-        {
-            get => _secondOctet;
-            set
-            {
-                _secondOctet = value;
-                OnPropertyChanged("SecondOctet");
-            }
-        }
-
-        private int _thirdOctet;
-
-        public int ThirdOctet
-        {
-            get => _thirdOctet;
-            set
-            {
-                _thirdOctet = value;
-                OnPropertyChanged("ThirdOctet");
-            }
-        }
-
-        private int _fourthOctet;
-
-        public int FourOctet
-        {
-            get => _fourthOctet;
-            set
-            {
-                _fourthOctet = value;
-                OnPropertyChanged("FourOctet");
-            }
-        }
-
-        private int _mask;
-
-        public int Mask
-        {
-            get => _mask;
-            set
-            {
-                _mask = value;
-                OnPropertyChanged("Mask");
-            }
-        }
-
-        private bool _isAllSubnetUnloading;
-
-        public bool IsAllSubnetUnloading
-        {
-            get => _isAllSubnetUnloading;
-            set
-            {
-                _isAllSubnetUnloading = value;
-                OnPropertyChanged("IsAllSubnetUnloading");
-            }
-        }
-        
-
+      
 
 
         private bool _clipboardMode;
@@ -643,32 +563,32 @@ namespace ServerLoadMonitoring {
         {
             IsBusy = true;
 
-            if (IsAllSubnetUnloading)
-                ConfigPlugin.connectionElServer.SendMessage(
-                    new ElMessageClient("BasicFunctions", "GetELogisticsAllSubnetTaskInPeriod", Response_GetListTask),
-                    JsonConvert.SerializeObject(new
-                    {
-                        DateFrom = SelectedDateFrom,
-                        DateTo = SelectedDateTo,
-                        TargetTaskCode = IPAddress
-                            .Parse(ipString: $"{FirstOctet}.{SecondOctet}.{ThirdOctet}.{FourOctet}").Address,
-                        Mask,
-                        IsLoadAttachment = false
-                    }));
+            //if (IsAllSubnetUnloading)
+            //    ConfigPlugin.connectionElServer.SendMessage(
+            //        new ElMessageClient("BasicFunctions", "GetELogisticsAllSubnetTaskInPeriod", Response_GetListTask),
+            //        JsonConvert.SerializeObject(new
+            //        {
+            //            DateFrom = SelectedDateFrom,
+            //            DateTo = SelectedDateTo,
+            //            TargetTaskCode = IPAddress
+            //                .Parse(ipString: $"{FirstOctet}.{SecondOctet}.{ThirdOctet}.{FourOctet}").Address,
+            //            Mask,
+            //            IsLoadAttachment = false
+            //        }));
 
 
-            else
-                ConfigPlugin.connectionElServer.SendMessage(
-                    new ElMessageClient("BasicFunctions", "GetELogisticsTaskInPeriod", Response_GetListTask),
-                    JsonConvert.SerializeObject(new
-                    {
-                        DateFrom = SelectedDateFrom,
-                        DateTo = SelectedDateTo,
-                        TargetTaskCode = IPAddress
-                            .Parse(ipString: $"{FirstOctet}.{SecondOctet}.{ThirdOctet}.{FourOctet}").Address,
-                        Mask,
-                        IsLoadAttachment = true
-                    }));
+            //else
+            //    ConfigPlugin.connectionElServer.SendMessage(
+            //        new ElMessageClient("BasicFunctions", "GetELogisticsTaskInPeriod", Response_GetListTask),
+            //        JsonConvert.SerializeObject(new
+            //        {
+            //            DateFrom = SelectedDateFrom,
+            //            DateTo = SelectedDateTo,
+            //            TargetTaskCode = IPAddress
+            //                .Parse(ipString: $"{FirstOctet}.{SecondOctet}.{ThirdOctet}.{FourOctet}").Address,
+            //            Mask,
+            //            IsLoadAttachment = true
+            //        }));
         }
 
         #endregion
@@ -855,7 +775,14 @@ namespace ServerLoadMonitoring {
       private void Response_RefreshData(string data)
       {
 	      try {
-
+		      if (JsonConvert.DeserializeObject<bool>(data))
+		      {
+               CommandGetMonitoringData.Execute(null);
+		      }
+		      else
+		      {
+			      //error string
+		      }
 		      //ListServerLoadMonitoringsData = JsonConvert.DeserializeObject<ObservableCollection<ElTask>>(data);
 
 		      //IsBusy = false;
@@ -867,10 +794,52 @@ namespace ServerLoadMonitoring {
       
       private void Response_GetMonitoringData(string data)
       {
-	      try {
+	      try
+	      {
 
-		      //ListServerLoadMonitoringsData = JsonConvert.DeserializeObject<ObservableCollection<ElTask>>(data);
+		      var jobs = JsonConvert.DeserializeObject<BackupMonitorData>(JsonConvert.DeserializeObject<string>(data));
+		      if (jobs != null)
+		      {
+			      _lastLoadedBackup = jobs;
 
+               var jobsModels = new List<JobViewModel>();
+
+               if (jobs.AgentsConfigs != null)
+               {
+	               foreach (var agentConfig in jobs.AgentsConfigs)
+	               {
+		               if (agentConfig.Jobs != null)
+		               {
+			               foreach (var job in agentConfig.Jobs)
+			               {
+				               var jobView = JsonConvert.DeserializeObject<JobViewModel>(JsonConvert.SerializeObject(job));
+
+                           if (jobView != null)
+				               {
+					               jobView.AgentName = agentConfig?.Name;
+					               jobsModels.Add(jobView);
+                           }
+				               else
+				               {
+					               LogManager.GetCurrentClassLogger().Error($"Ошибка чтения работы {job}");
+                           }
+				              
+			               }
+		               }
+	               }
+               }
+
+               //send data to heatmap control
+               HeatmapControl.UpdateData(jobsModels);
+
+               //если вклюено обновление данных у этого пользователя и состояние бэкапа обновлялось больше, чем полчаса назад, то запускаем заново
+               if (ConfigPlugin.IsRefreshDataEnabled && _lastLoadedBackup.RefreshingData < DateTime.Now.AddMinutes(-30))
+               {
+                  CommandRefreshData.Execute(null);
+               }
+            }
+            
+		     
 		      //IsBusy = false;
 	      } catch (Exception e) {
 		      LogManager.GetCurrentClassLogger().Error(e.ToString().Replace("\r\n", ""));

@@ -59,6 +59,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -113,11 +114,11 @@
     </Compile>
     <Compile Include="ServerLoadMonitoringAdditional\ServerLoadMonitoringAdditionalViewModel.cs" />
     <Compile Include="ServerLoadMonitoringAdditional\ServerLoadMonitoringAdditionalVM.cs" />
-    <Compile Include="ServerLoadMonitoring\ServerLoadMonitoring.xaml.cs">
-      <DependentUpon>ServerLoadMonitoring.xaml</DependentUpon>
+    <Compile Include="ServerLoadMonitoringData\ServerLoadMonitoringData.xaml.cs">
+      <DependentUpon>ServerLoadMonitoringData.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ServerLoadMonitoring\ServerLoadMonitoringViewModel.cs" />
-    <Compile Include="ServerLoadMonitoring\ServerLoadMonitoringVM.cs" />
+    <Compile Include="ServerLoadMonitoringData\ServerLoadMonitoringViewModel.cs" />
+    <Compile Include="ServerLoadMonitoringData\ServerLoadMonitoringVM.cs" />
     <Page Include="Helpers\JobsHeatmapControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -135,7 +136,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ServerLoadMonitoring\ServerLoadMonitoring.xaml">
+    <Page Include="ServerLoadMonitoringData\ServerLoadMonitoringData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

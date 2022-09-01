@@ -18,16 +18,16 @@ using NLog;
 using ServerLoadMonitoring.Helpers;
 using WarehouseСontexts.ContextSelector;
 
-namespace ServerLoadMonitoring {
+namespace ServerLoadMonitoring.ServerLoadMonitoringData {
 	/// <summary>
-	/// Interaction logic for ServerLoadMonitoringData.xaml
+	/// Interaction logic for ServerLoadMonitoringDataModel.xaml
 	/// </summary>
-	public partial class ServerLoadMonitoring:IMonitoringElUserControl,IDisposable,IElHotKey {
+	public partial class ServerLoadMonitoringData:IMonitoringElUserControl,IDisposable,IElHotKey {
 
 
 		public ContextSelector contextSelector { get; set; }
 
-		public ServerLoadMonitoring() {
+		public ServerLoadMonitoringData() {
 			InitializeComponent();
 
 			Base.Visibility = Visibility.Hidden;
@@ -57,21 +57,23 @@ namespace ServerLoadMonitoring {
 			Base.DataContext = tmp;
 			Base.Visibility = Visibility.Visible;
             //Список контролов на загрузку настроек
-            tmp.CommandLoadSettingControlOnOpen.Execute(null);
+           // tmp.CommandLoadSettingControlOnOpen.Execute(null);
             //******************************************
-        }
+				tmp.CommandGetMonitoringData.Execute(null);
+
+		  }
 
         public void OnElHotKey(KeyEventArgs e)
         {
 
-            if (e.Key == Key.F5 && Base.DataContext is ServerLoadMonitoringDataViewModel getAllSupply)
-					getAllSupply.CommandRefreshData.Execute(null);
-                //if (getAllSupply.ActiveTab == 0)
-                //    getAllSupply.CommandGetTaskList.Execute(null);
-            //if (e.Key == Key.F && Base.DataContext is ServerLoadMonitoringDataViewModel search)
-            //    if (search.ActiveTab == 0) GridServerLoadMonitoringsData.ShowSearchPanel=true;
+            if (e.Key == Key.F5 && Base.DataContext is ServerLoadMonitoringDataViewModel refresh)
+	            refresh.CommandGetMonitoringData.Execute(null);
 
-        }
+            if (e.Key == Key.F2 && Base.DataContext is ServerLoadMonitoringDataViewModel getAllSupply)
+	            getAllSupply.CommandRefreshData.Execute(null);
+			
+
+		}
 
         public void OnElScanData(List<KeyEventArgs> listKey)
         {

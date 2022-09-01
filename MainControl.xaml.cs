@@ -136,6 +136,20 @@ namespace ServerLoadMonitoring
             {
                 ConfigPlugin.GlobalModel.IsKioskMode = !ConfigPlugin.GlobalModel.IsKioskMode;
                 return;
+            } 
+
+            //Предыдущий слайд
+            if (e.Key == Key.Left)
+            {
+                ConfigPlugin.GlobalModel.CommandBackSlide.Execute(null);
+                return;
+            } 
+            
+            //Следующий слайд
+            if (e.Key == Key.Right)
+            {
+                ConfigPlugin.GlobalModel.CommandNextSlide.Execute(null);
+                return;
             }
 
 

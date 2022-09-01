@@ -7,11 +7,11 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ServerLoadMonitoring")]
-[assembly: AssemblyDescription("ServerLoadMonitoring")]
+[assembly: AssemblyTitle("ServerLoadMonitoringData")]
+[assembly: AssemblyDescription("ServerLoadMonitoringData")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("BPOD")]
-[assembly: AssemblyProduct("ServerLoadMonitoring")]
+[assembly: AssemblyProduct("ServerLoadMonitoringData")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

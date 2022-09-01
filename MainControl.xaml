@@ -14,22 +14,16 @@
 		<telerik:StringToGlyphConverter x:Key="StringToGlyphConverter" />
 		<Style TargetType="telerik:RadNavigationViewItem" >
 			<Style.Setters>
-				<Setter Property="Content" Value="{Binding Title}"/>
+				
 				<Setter Property="Icon" Value="{Binding Image}" />
-				<Setter Property="Visibility"  Value="{Binding Visibility}" />
+				<Setter Property="Visibility"  Value="Hidden" />
 				<Setter Property="ToolTip" Value="{Binding Title}"/>
 
-				<Setter Property="IconTemplate">
-					<Setter.Value>
-						<DataTemplate>
-							<telerik:RadGlyph Glyph="{Binding Converter={StaticResource StringToGlyphConverter}}" />
-						</DataTemplate>
-					</Setter.Value>
-				</Setter>
+				
 
 			</Style.Setters>
 
-			<Style.Triggers>
+			<!--<Style.Triggers>
 				<Trigger Property="telerik:RadNavigationViewItem.IsSelected" Value="True">
 					<Setter Property="IconTemplate">
 						<Setter.Value>
@@ -43,7 +37,7 @@
 				<DataTrigger  Binding="{Binding Path=IsPaneOpen, ElementName=navigationView}" Value="true">
 					<Setter Property="ToolTipService.IsEnabled" Value="false"/>
 				</DataTrigger>
-			</Style.Triggers>
+			</Style.Triggers>-->
 		</Style>
 
 
@@ -64,33 +58,26 @@
 	</UserControl.Resources>
 
 	<Grid Name="Base">
+		<!--<telerik:RadTransitionControl Content="{Binding ControlsList}" ContentTemplate="{StaticResource TransitionControlContentTemplate}" Foreground="Black" Duration="0:0:0.1">
+			<telerik:RadTransitionControl.Transition>
+				<telerik:FadeTransition />
+			</telerik:RadTransitionControl.Transition>
+		</telerik:RadTransitionControl>-->
 
-		<!--<telerik:RadNavigationView x:Name="navigationView" 
-		                           ItemsSource="{Binding IncludedContentList}" 
+		<telerik:RadNavigationView x:Name="navigationView" 
+		                           ItemsSource="{Binding ControlsList}" 
 		                           AutoChangeDisplayMode="False"
 		                           SelectedIndex="{Binding SelectedIndex}" 
-		                           PaneHeaderHeight="66">
+		                           PaneHeaderHeight="0">
 
 			<telerik:RadNavigationView.Content>
-				<telerik:RadTransitionControl Content="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=telerik:RadNavigationView}}" ContentTemplate="{StaticResource TransitionControlContentTemplate}" Foreground="Black" Duration="0:0:0.1">
-					<telerik:RadTransitionControl.Transition>
+				<telerik:RadTransitionControl Content="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=telerik:RadNavigationView}}"  Foreground="Black" Duration="0:0:0.1">
+					<!--<telerik:RadTransitionControl.Transition>
 						<telerik:FadeTransition />
-					</telerik:RadTransitionControl.Transition>
+					</telerik:RadTransitionControl.Transition>-->
 				</telerik:RadTransitionControl>
 			</telerik:RadNavigationView.Content>
-			<telerik:RadNavigationView.PaneFooter>
-				<telerik:RadNavigationViewItem Content="Помощь" 
-				                               Command="{Binding CommandStartHelper}"
-				                               CommandParameter="{Binding ElementName=navigationView}"
-				                               IconTemplate="{x:Null}"
-                                               
-				>
-					<telerik:RadNavigationViewItem.Icon>
-						<telerik:RadGlyph Glyph="&#xe402;" FontSize="16" ToolTip="Помощь"/>
-					</telerik:RadNavigationViewItem.Icon>
-				</telerik:RadNavigationViewItem>
-			</telerik:RadNavigationView.PaneFooter>
-		</telerik:RadNavigationView>-->
+		</telerik:RadNavigationView>
 
 
 
