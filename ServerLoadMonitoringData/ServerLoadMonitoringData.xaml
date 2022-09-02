@@ -352,7 +352,7 @@
 			<TextBlock Grid.Column="0" Text="1" FontSize="40" Foreground="LightSeaGreen">
 				</TextBlock>
 
-			<helpers:JobsHeatmapControl Grid.Column="1" x:Name="HeatmapControl">
+			<helpers:JobsHeatmapControl Grid.Column="1" x:Name="HeatmapControl" VerticalContentAlignment="Top" HorizontalContentAlignment="Right" >
 			</helpers:JobsHeatmapControl>
 
 					<!--Лента -->

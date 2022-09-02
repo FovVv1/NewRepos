@@ -68,7 +68,7 @@
 		                           ItemsSource="{Binding ControlsList}" 
 		                           AutoChangeDisplayMode="False"
 		                           SelectedIndex="{Binding SelectedIndex}" 
-		                           PaneHeaderHeight="0">
+		                           PaneHeaderHeight="0" CompactPaneWidth="0">
 
 			<telerik:RadNavigationView.Content>
 				<telerik:RadTransitionControl Content="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=telerik:RadNavigationView}}"  Foreground="Black" Duration="0:0:0.1">

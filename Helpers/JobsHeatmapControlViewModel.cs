@@ -35,15 +35,12 @@ namespace ServerLoadMonitoring.Helpers {
 
 				if (jobs != null && jobs.Any())
 				{
+					lastMessages.Add(jobs[0].Description + ": " + jobs[0].LastMessage);
 					if (jobs.Count() >= 2)
 					{
-						lastMessages.Add(jobs[0].Description);
-						lastMessages.Add(jobs[1].Description);
+						lastMessages.Add(jobs[1].Description + ": " + jobs[1].LastMessage);
 					}
-					else
-					{
-						lastMessages.Add(jobs[0].Description);
-					}
+					
 					//lastMessages.ad
 				}
 

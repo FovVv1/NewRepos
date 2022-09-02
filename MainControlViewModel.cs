@@ -253,6 +253,10 @@ namespace ServerLoadMonitoring {
 				{
 					SelectedIndex+=1;
 				}
+				else
+				{
+					SelectedIndex = 0;
+				}
 				
 				//if (index < ListSlide.Count - 1)
 				//	ListSelected = ListSlide[++index];
@@ -271,6 +275,10 @@ namespace ServerLoadMonitoring {
             //	ListSelected = ListSlide[--index];
             if (SelectedIndex != 0) {
 	            SelectedIndex -= 1;
+            }
+            else
+            {
+	            SelectedIndex = ControlsList.Count - 1;
             }
          } catch (Exception e) {
 				LogManager.GetCurrentClassLogger().Error(e.ToString().Replace("\r\n", ""));

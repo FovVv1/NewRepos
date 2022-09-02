@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ServerLoadMonitoring {
-	public class ServerLoadMonitoringDataModelVm:ServerLoadMonitoringDataModels.ServerLoadMonitoringDataModel, INotifyPropertyChanged {
+	public class ServerLoadMonitoringDataModelVm:ServerLoadMonitoringDataModels.ServerLoadMonitoring, INotifyPropertyChanged {
 		#region OnPropertyChanged
 		public event PropertyChangedEventHandler PropertyChanged;
 		public void OnPropertyChanged([CallerMemberName] string prop = "") {
