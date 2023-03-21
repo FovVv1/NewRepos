@@ -64,11 +64,6 @@ namespace ServerLoadMonitoring
             }
 
 
-            if (_param.ContainsKey("IsRefreshDataEnabled"))
-                //Разрешение на обновление данных
-                ConfigPlugin.IsRefreshDataEnabled = bool.TryParse(_param["IsRefreshDataEnabled"].Value, out var isRefreshDataEnabled);
-
-
             Application.Current.Dispatcher.Invoke(() =>
             {
                 InitializeComponent();

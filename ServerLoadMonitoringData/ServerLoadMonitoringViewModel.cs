@@ -215,7 +215,7 @@ namespace ServerLoadMonitoring {
         {
             try
             {
-	            if (ConfigPlugin.IsRefreshDataEnabled)
+	            if (ConfigPlugin.SecurityKey.HasFlag(EPermissions.IsRefreshDataEnabled))
 	            {
 		            ConfigPlugin.connectionElServer.SendMessage(
 			            new ElMessageClient("ServerLoadMonitoring", "RefreshData", Response_RefreshData),
@@ -833,7 +833,7 @@ namespace ServerLoadMonitoring {
                HeatmapControl.UpdateData(jobsModels);
 
                //если вклюено обновление данных у этого пользователя и состояние бэкапа обновлялось больше, чем полчаса назад, то запускаем заново
-               if (ConfigPlugin.IsRefreshDataEnabled && _lastLoadedBackup.RefreshingData < DateTime.Now.AddMinutes(-30))
+               if (ConfigPlugin.SecurityKey.HasFlag(EPermissions.IsRefreshDataEnabled) && _lastLoadedBackup.RefreshingData < DateTime.Now.AddMinutes(-30))
                {
                   CommandRefreshData.Execute(null);
                }
