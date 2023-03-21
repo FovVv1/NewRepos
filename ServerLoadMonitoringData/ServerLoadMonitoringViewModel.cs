@@ -775,14 +775,14 @@ namespace ServerLoadMonitoring {
       private void Response_RefreshData(string data)
       {
 	      try {
-		      if (JsonConvert.DeserializeObject<bool>(data))
-		      {
+		    //  if (JsonConvert.DeserializeObject<bool>(data))
+		     // {
                CommandGetMonitoringData.Execute(null);
-		      }
-		      else
-		      {
-			      //error string
-		      }
+		   //   }
+		      //else
+		      //{
+			     // //error string
+		      //}
 		      //ListServerLoadMonitoringsData = JsonConvert.DeserializeObject<ObservableCollection<ElTask>>(data);
 
 		      //IsBusy = false;

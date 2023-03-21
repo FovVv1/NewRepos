@@ -22,73 +22,67 @@ namespace ServerLoadMonitoring
     /// <summary>
     /// Interaction logic for MainControl.xaml
     /// </summary>
-    public partial class MainControl : UserControl,IDisposable,IElHotKey
+    public partial class MainControl : UserControl, IDisposable, IElHotKey
     {
-		public MainControl(ElPluginClientSettings setting) {
-			ConfigPlugin.connectionElServer = setting.ConnectionElServer;
-			ConfigPlugin.BasePath = setting.PluginFolderPath;
-			ConfigPlugin.TargetContext = null;
-			ConfigPlugin.GlobalModel = new MainControlViewModel();
+        public MainControl(ElPluginClientSettings setting)
+        {
+            ConfigPlugin.connectionElServer = setting.ConnectionElServer;
+            ConfigPlugin.BasePath = setting.PluginFolderPath;
+            ConfigPlugin.TargetContext = null;
+            ConfigPlugin.GlobalModel = new MainControlViewModel();
 
 
-			
+            //Регестрируем идентификатор процесса
+            ConfigPlugin.ProcessId = (int) setting.Parameters["PluginId"];
 
-        
-				//Регестрируем идентификатор процесса
-            ConfigPlugin.ProcessId = (int)setting.Parameters["PluginId"];
-
-            if(setting.Parameters.ContainsKey("SecurityKey"))
-            ConfigPlugin.SetSecurityKey((ulong)setting.Parameters["SecurityKey"]);
+            if (setting.Parameters.ContainsKey("SecurityKey"))
+                ConfigPlugin.SetSecurityKey((ulong) setting.Parameters["SecurityKey"]);
 
             if (setting.Parameters.ContainsKey("EL_APPDATA"))
-	            ConfigPlugin.ELAppData = (string)setting.Parameters["EL_APPDATA"];
-        
-
-         ConfigPlugin.connectionElServer.SendMessage(new ElMessageClient("BasicFunctions", "GetUserSettings", Response_StartViewModel),
-	         JsonConvert.SerializeObject(new { UserId = ConfigPlugin.connectionElServer.CurrentUser.UserID, PluginName = "ServerLoadMonitoring" }));
+                ConfigPlugin.ELAppData = (string) setting.Parameters["EL_APPDATA"];
 
 
-
-        
-
-		}
-
-
-		private void Response_StartViewModel(string data) {
-			Dictionary<string, UserSetting> _param;
-			try {
-				_param = JsonConvert.DeserializeObject<List<UserSetting>>(data).ToDictionary(u => u.KeyName);
-			} catch {
-				_param = new Dictionary<string, UserSetting>();
-			}
+            ConfigPlugin.connectionElServer.SendMessage(
+                new ElMessageClient("BasicFunctions", "GetUserSettings", Response_StartViewModel),
+                JsonConvert.SerializeObject(new
+                {
+                    UserId = ConfigPlugin.connectionElServer.CurrentUser.UserID, PluginName = "ServerLoadMonitoring"
+                }));
+        }
 
 
-			
-
-			
-
-			if (_param.ContainsKey("IsRefreshDataEnabled"))
-            //Разрешение на обновление данных
-            ConfigPlugin.IsRefreshDataEnabled = bool.TryParse(_param["IsRefreshDataEnabled"].Value, out var isRefreshDataEnabled);
-
-         
-
-         Application.Current.Dispatcher.Invoke(() =>
-         {
-	         InitializeComponent();
-	         Base.DataContext = ConfigPlugin.GlobalModel;
-
-	         if (_param.ContainsKey("FullScreen"))
-		         ConfigPlugin.GlobalModel.IsKioskMode = true;
-         });
+        private void Response_StartViewModel(string data)
+        {
+            Dictionary<string, UserSetting> _param;
+            try
+            {
+                _param = JsonConvert.DeserializeObject<List<UserSetting>>(data).ToDictionary(u => u.KeyName);
+            }
+            catch
+            {
+                _param = new Dictionary<string, UserSetting>();
+            }
 
 
-      }
+            if (_param.ContainsKey("IsRefreshDataEnabled"))
+                //Разрешение на обновление данных
+                ConfigPlugin.IsRefreshDataEnabled = bool.TryParse(_param["IsRefreshDataEnabled"].Value, out var isRefreshDataEnabled);
 
 
-      #region DISPOSE
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                InitializeComponent();
+                Base.DataContext = ConfigPlugin.GlobalModel;
 
-      private bool _disposed = false;
+                if (_param.ContainsKey("FullScreen"))
+                    ConfigPlugin.GlobalModel.IsKioskMode = true;
+            });
+        }
+
+
+        #region DISPOSE
+
+        private bool _disposed = false;
 
         // реализация интерфейса IDisposable.
         public void Dispose()
@@ -103,14 +97,14 @@ namespace ServerLoadMonitoring
             if (_disposed) return;
             if (disposing)
             {
-
                 foreach (var viewModel in ConfigPlugin.GlobalModel.ControlsList)
                 {
-	                //if (viewModel is MainControlModel tmpss)
-		                if (viewModel is IDisposable dis)
-			                dis.Dispose();
+                    //if (viewModel is MainControlModel tmpss)
+                    if (viewModel is IDisposable dis)
+                        dis.Dispose();
                 }
             }
+
             // освобождаем неуправляемые объекты
             _disposed = true;
         }
@@ -120,7 +114,9 @@ namespace ServerLoadMonitoring
         {
             Dispose(false);
         }
+
         #endregion
+
         public void OnElHotKey(KeyEventArgs e)
         {
             //Вызов пощи для расширения
@@ -130,21 +126,21 @@ namespace ServerLoadMonitoring
                 return;
             }
 
-            
+
             //Отключение полноэкранного режима
             if (e.Key == Key.B)
             {
                 ConfigPlugin.GlobalModel.IsKioskMode = !ConfigPlugin.GlobalModel.IsKioskMode;
                 return;
-            } 
+            }
 
             //Предыдущий слайд
             if (e.Key == Key.Left)
             {
                 ConfigPlugin.GlobalModel.CommandBackSlide.Execute(null);
                 return;
-            } 
-            
+            }
+
             //Следующий слайд
             if (e.Key == Key.Right)
             {
@@ -153,16 +149,14 @@ namespace ServerLoadMonitoring
             }
 
 
-
-
-            if (ConfigPlugin.GlobalModel.ControlsList[ConfigPlugin.GlobalModel.SelectedIndex] is IElHotKey vm) vm.OnElHotKey(e);
-
+            if (ConfigPlugin.GlobalModel.ControlsList[ConfigPlugin.GlobalModel.SelectedIndex] is IElHotKey vm)
+                vm.OnElHotKey(e);
         }
 
         public void OnElScanData(List<KeyEventArgs> listKey)
         {
-            if (ConfigPlugin.GlobalModel.ControlsList[ConfigPlugin.GlobalModel.SelectedIndex] is IElHotKey vm) vm.OnElScanData(listKey);
+            if (ConfigPlugin.GlobalModel.ControlsList[ConfigPlugin.GlobalModel.SelectedIndex] is IElHotKey vm)
+                vm.OnElScanData(listKey);
         }
-
-	}
+    }
 }
